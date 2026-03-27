@@ -1,0 +1,50 @@
+{
+  "tasks": [
+    {
+      "task_name": "analyze_data",
+      "description": "Examine raw data or documents to extract patterns, insights, and meaningful information.",
+      "required_inputs": [
+        "raw_data",
+        "analysis_type"
+      ],
+      "allowed_agents": [
+        "research_agent"
+      ]
+    },
+    {
+      "task_name": "summarize",
+      "description": "Condense a given body of text or findings into a concise, readable summary.",
+      "required_inputs": [
+        "source_text",
+        "max_length"
+      ],
+      "allowed_agents": [
+        "summary_agent",
+        "report_agent"
+      ]
+    },
+    {
+      "task_name": "search_information",
+      "description": "Search for relevant information from available sources based on a given query.",
+      "required_inputs": [
+        "query",
+        "search_scope"
+      ],
+      "allowed_agents": [
+        "research_agent"
+      ]
+    },
+    {
+      "task_name": "generate_report",
+      "description": "Compile analyzed data and summaries into a structured, formatted final report.",
+      "required_inputs": [
+        "summary",
+        "analyzed_data",
+        "report_format"
+      ],
+      "allowed_agents": [
+        "report_agent"
+      ]
+    }
+  ]
+}

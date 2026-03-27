@@ -1,0 +1,48 @@
+{
+  "agents": [
+    {
+      "agent_id": "research_agent",
+      "role": "Research & Information Gathering",
+      "skills": [
+        "web_search",
+        "document_retrieval",
+        "data_extraction",
+        "source_validation"
+      ],
+      "allowed_tasks": [
+        "search_information",
+        "analyze_data"
+      ],
+      "priority": 1
+    },
+    {
+      "agent_id": "summary_agent",
+      "role": "Content Summarization & Condensing",
+      "skills": [
+        "text_summarization",
+        "keyword_extraction",
+        "content_compression",
+        "context_retention"
+      ],
+      "allowed_tasks": [
+        "summarize"
+      ],
+      "priority": 2
+    },
+    {
+      "agent_id": "report_agent",
+      "role": "Report Generation & Formatting",
+      "skills": [
+        "report_writing",
+        "data_formatting",
+        "insight_generation",
+        "structured_output"
+      ],
+      "allowed_tasks": [
+        "generate_report",
+        "summarize"
+      ],
+      "priority": 3
+    }
+  ]
+}
