@@ -8,9 +8,9 @@ logger = logging.getLogger(__name__)
 # Registry directory — always relative to this file
 REGISTRY_DIR = Path(__file__).parent
 
-# In-memory storage
-_agents: list = []
-_tasks: list = []
+# In-memory storage — frozen as tuples after load to prevent mutation
+_agents: tuple = ()
+_tasks: tuple = ()
 
 
 def load_agents() -> list:
@@ -22,7 +22,7 @@ def load_agents() -> list:
     with open(agents_path, "r") as f:
         data = json.load(f)
 
-    _agents = data["agents"]
+    _agents = tuple(data["agents"])
 
     logger.info("Registry loaded: %d agent(s) loaded from %s", len(_agents), agents_path.name)
     print(f"[registry] {len(_agents)} agent(s) loaded: {[a['agent_id'] for a in _agents]}")
@@ -39,7 +39,7 @@ def load_tasks() -> list:
     with open(tasks_path, "r") as f:
         data = json.load(f)
 
-    _tasks = data["tasks"]
+    _tasks = tuple(data["tasks"])
 
     logger.info("Registry loaded: %d task(s) loaded from %s", len(_tasks), tasks_path.name)
     print(f"[registry] {len(_tasks)} task(s) loaded: {[t['task_name'] for t in _tasks]}")
@@ -51,8 +51,8 @@ def load_tasks() -> list:
 # Access functions
 # ---------------------------------------------------------------------------
 
-def get_all_agents() -> list:
-    """Return all loaded agents."""
+def get_all_agents() -> tuple:
+    """Return all loaded agents as a frozen tuple."""
     return _agents
 
 
@@ -61,8 +61,8 @@ def get_agent(agent_id: str) -> Optional[dict]:
     return next((a for a in _agents if a["agent_id"] == agent_id), None)
 
 
-def get_all_tasks() -> list:
-    """Return all loaded tasks."""
+def get_all_tasks() -> tuple:
+    """Return all loaded tasks as a frozen tuple."""
     return _tasks
 
 
