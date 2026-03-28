@@ -1,22 +1,13 @@
-import logging
-from app.workflow.models import WorkflowStep
-
-logger = logging.getLogger(__name__)
-
-
-def execute_step(step: WorkflowStep) -> dict:
-    """
-    Execute a single workflow step.
-    Returns a mock result for now — real adapter logic added in later checkpoint.
-    """
-    logger.info("[runner] Executing step %d | task: %s | agent: %s",
-                step.step_id, step.task, step.agent)
-
-    # Mock execution — replace with real agent adapter in later checkpoint
-    result = {
-        "result": f"Executed {step.task}",
-        "status": "completed",
-    }
-
-    logger.info("[runner] Step %d completed | result: %s", step.step_id, result)
-    return result
+# ---------------------------------------------------------------------------
+# runner.py — SUPERSEDED by Checkpoint 7: Adapter Layer
+# ---------------------------------------------------------------------------
+# execute_step() has been removed.
+# The execution engine (engine.py) now resolves agents via:
+#
+#   from app.adapters.registry import get_agent_adapter
+#   adapter = get_agent_adapter(step.agent)
+#   outcome = adapter.execute(step.input)
+#
+# This file is intentionally kept as a placeholder.
+# It will be repurposed in a future checkpoint if needed.
+# ---------------------------------------------------------------------------

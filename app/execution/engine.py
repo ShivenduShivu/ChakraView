@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, timezone
 from app.workflow.models import WorkflowStep
 from app.workflow.state import StepStatus
-from app.execution.runner import execute_step
+from app.adapters.registry import get_agent_adapter
 
 logger = logging.getLogger(__name__)
 
@@ -34,19 +34,22 @@ def run_workflow(steps: tuple[WorkflowStep, ...]) -> dict:
                     step.step_id, step.task)
 
         try:
-            # Step 2 — execute
-            outcome = execute_step(step)
+            # Step 2 — resolve adapter and execute
+            adapter = get_agent_adapter(step.agent)
+            outcome = adapter.execute(step.input)
 
             # Step 3 — mark as completed
             step = step.model_copy(update={"status": StepStatus.completed})
             logger.info("[execution] Step %d | status: completed", step.step_id)
 
             results.append({
-                "step_id":   step.step_id,
-                "task":      step.task,
-                "result":    outcome.get("result"),
-                "error":     None,
-                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "step_id":    step.step_id,
+                "task":       step.task,
+                "result":     outcome.get("result"),
+                "warning":    outcome.get("warning"),
+                "confidence": outcome.get("confidence"),
+                "error":      None,
+                "timestamp":  datetime.now(timezone.utc).isoformat(),
             })
 
         except Exception as e:
